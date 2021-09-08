@@ -26,6 +26,8 @@ on:
 #    The docker repository where the images are pushed to.
 # DOCKER_ORG_TESTS: ${{ secrets.DOCKER_ORG_TESTS }}
 #    The docker repository for test images. Only used for the branch TESTING (BORS try).
+# DOCKER_PREFIX: ${{ secrets.DOCKER_PREFIX }}
+#    The prefix for the image names
 # Add the above secrets to your github repo to determine where the images will be pushed.
 ################################################
 
@@ -76,9 +78,31 @@ jobs:
           MAILU_VERSION: ${{ env.MAILU_VERSION }}
           TRAVIS_BRANCH: ${{ env.BRANCH }}
           DOCKER_ORG: ${{ secrets.DOCKER_ORG }}
+          DOCKER_PREFIX: ${{ secrets.DOCKER_PREFIX }}
         run: docker-compose -f tests/build.yml build
       - name: Save all docker images
-        run: docker save ${{ secrets.DOCKER_ORG }}/admin ${{ secrets.DOCKER_ORG }}/clamav ${{ secrets.DOCKER_ORG }}/docs ${{ secrets.DOCKER_ORG }}/dovecot ${{ secrets.DOCKER_ORG }}/fetchmail ${{ secrets.DOCKER_ORG }}/nginx ${{ secrets.DOCKER_ORG }}/none ${{ secrets.DOCKER_ORG }}/postfix ${{ secrets.DOCKER_ORG }}/postgresql ${{ secrets.DOCKER_ORG }}/radicale ${{ secrets.DOCKER_ORG }}/rainloop ${{ secrets.DOCKER_ORG }}/roundcube ${{ secrets.DOCKER_ORG }}/rspamd ${{ secrets.DOCKER_ORG }}/setup ${{ secrets.DOCKER_ORG }}/traefik-certdumper ${{ secrets.DOCKER_ORG }}/unbound -o /images/images.tar.gz
+        env:
+          DOCKER_ORG: ${{ secrets.DOCKER_ORG }}
+          DOCKER_PREFIX: ${{ secrets.DOCKER_PREFIX }}
+        run: >
+          docker save
+            "${DOCKER_ORG}/${DOCKER_PREFIX}admin"
+            "${DOCKER_ORG}/${DOCKER_PREFIX}clamav"
+            "${DOCKER_ORG}/${DOCKER_PREFIX}docs"
+            "${DOCKER_ORG}/${DOCKER_PREFIX}dovecot"
+            "${DOCKER_ORG}/${DOCKER_PREFIX}fetchmail"
+            "${DOCKER_ORG}/${DOCKER_PREFIX}nginx"
+            "${DOCKER_ORG}/${DOCKER_PREFIX}none"
+            "${DOCKER_ORG}/${DOCKER_PREFIX}postfix"
+            "${DOCKER_ORG}/${DOCKER_PREFIX}postgresql"
+            "${DOCKER_ORG}/${DOCKER_PREFIX}radicale"
+            "${DOCKER_ORG}/${DOCKER_PREFIX}rainloop"
+            "${DOCKER_ORG}/${DOCKER_PREFIX}roundcube"
+            "${DOCKER_ORG}/${DOCKER_PREFIX}rspamd"
+            "${DOCKER_ORG}/${DOCKER_PREFIX}setup"
+            "${DOCKER_ORG}/${DOCKER_PREFIX}traefik-certdumper"
+            "${DOCKER_ORG}/${DOCKER_PREFIX}unbound"
+          -o /images/images.tar.gz
 
   test-core:
     name: Perform core tests
@@ -414,6 +438,7 @@ jobs:
           DOCKER_PW: ${{ secrets.Docker_Password }}
           DOCKER_ORG: ${{ secrets.DOCKER_ORG }}
           DOCKER_ORG_TESTS: ${{ secrets.DOCKER_ORG_TESTS }}
+          DOCKER_PREFIX: ${{ secrets.DOCKER_PREFIX }}
           MAILU_VERSION: ${{ env.MAILU_VERSION }}
           TRAVIS_BRANCH: ${{ env.BRANCH }}
         run: bash tests/deploy.sh
