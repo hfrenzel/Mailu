@@ -34,7 +34,7 @@ on:
 jobs:
   build:
     name: Build images
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-aarch64
     steps:
       - uses: actions/checkout@v2
       - name: Extract branch name
@@ -106,7 +106,7 @@ jobs:
 
   test-core:
     name: Perform core tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-aarch64
     needs:
       - build
     steps:
@@ -153,7 +153,7 @@ jobs:
 
   test-fetchmail:
     name: Perform fetchmail tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-aarch64
     needs:
       - build
     steps:
@@ -200,7 +200,7 @@ jobs:
 
   test-filters:
     name: Perform filter tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-aarch64
     needs:
       - build
     steps:
@@ -247,7 +247,7 @@ jobs:
 
   test-rainloop:
     name: Perform rainloop tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-aarch64
     needs:
       - build
     steps:
@@ -294,7 +294,7 @@ jobs:
 
   test-roundcube:
     name: Perform roundcube tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-aarch64
     needs:
       - build
     steps:
@@ -341,7 +341,7 @@ jobs:
 
   test-webdav:
     name: Perform webdav tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-aarch64
     needs:
       - build
     steps:
@@ -388,7 +388,7 @@ jobs:
 
   deploy:
     name: Deploy images
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-aarch64
     needs:
       - build
       - test-core
@@ -450,7 +450,7 @@ jobs:
     if: ${{ success() }}
     needs: 
       - deploy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-aarch64
     steps:
       - name: CI/CD succeeded.
         run: exit 0
