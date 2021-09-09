@@ -84,25 +84,7 @@ jobs:
         env:
           DOCKER_ORG: ${{ secrets.DOCKER_ORG }}
           DOCKER_PREFIX: ${{ secrets.DOCKER_PREFIX }}
-        run: >
-          docker save
-            "${DOCKER_ORG}/${DOCKER_PREFIX}admin"
-            "${DOCKER_ORG}/${DOCKER_PREFIX}clamav"
-            "${DOCKER_ORG}/${DOCKER_PREFIX}docs"
-            "${DOCKER_ORG}/${DOCKER_PREFIX}dovecot"
-            "${DOCKER_ORG}/${DOCKER_PREFIX}fetchmail"
-            "${DOCKER_ORG}/${DOCKER_PREFIX}nginx"
-            "${DOCKER_ORG}/${DOCKER_PREFIX}none"
-            "${DOCKER_ORG}/${DOCKER_PREFIX}postfix"
-            "${DOCKER_ORG}/${DOCKER_PREFIX}postgresql"
-            "${DOCKER_ORG}/${DOCKER_PREFIX}radicale"
-            "${DOCKER_ORG}/${DOCKER_PREFIX}rainloop"
-            "${DOCKER_ORG}/${DOCKER_PREFIX}roundcube"
-            "${DOCKER_ORG}/${DOCKER_PREFIX}rspamd"
-            "${DOCKER_ORG}/${DOCKER_PREFIX}setup"
-            "${DOCKER_ORG}/${DOCKER_PREFIX}traefik-certdumper"
-            "${DOCKER_ORG}/${DOCKER_PREFIX}unbound"
-          -o /images/images.tar.gz
+        run: docker save "${DOCKER_ORG}/${DOCKER_PREFIX}admin" "${DOCKER_ORG}/${DOCKER_PREFIX}clamav" "${DOCKER_ORG}/${DOCKER_PREFIX}docs" "${DOCKER_ORG}/${DOCKER_PREFIX}dovecot" "${DOCKER_ORG}/${DOCKER_PREFIX}fetchmail" "${DOCKER_ORG}/${DOCKER_PREFIX}nginx" "${DOCKER_ORG}/${DOCKER_PREFIX}none" "${DOCKER_ORG}/${DOCKER_PREFIX}postfix" "${DOCKER_ORG}/${DOCKER_PREFIX}postgresql" "${DOCKER_ORG}/${DOCKER_PREFIX}radicale" "${DOCKER_ORG}/${DOCKER_PREFIX}rainloop" "${DOCKER_ORG}/${DOCKER_PREFIX}roundcube" "${DOCKER_ORG}/${DOCKER_PREFIX}rspamd" "${DOCKER_ORG}/${DOCKER_PREFIX}setup" "${DOCKER_ORG}/${DOCKER_PREFIX}traefik-certdumper" "${DOCKER_ORG}/${DOCKER_PREFIX}unbound" -o /images/images.tar.gz
 
   test-core:
     name: Perform core tests
